@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">warrenChallenge</string>
+    <string name="login_text">Login</string>
+    <string name="password_text">Password</string>
+    <string name="input_text">Type here</string>
+    <string name="email">mobile_test@warrenbrasil.com</string>
+    <string name="password">Warren123!</string>
+</resources>

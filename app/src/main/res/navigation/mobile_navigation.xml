@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/home_dest">
+
+    <activity
+        android:id="@+id/home_dest"
+        android:name="com.example.warrenchallenge.MainActivity"
+        android:label="main_activity"
+        tools:layout="@layout/activity_main"/>
+    <activity/>
+    <activity
+        android:id="@+id/login_dest"
+        android:name="com.example.warrenchallenge.LoginActivity"
+        android:label="login_activity"
+        tools:layout="@layout/login_activity"/>
+    <activity
+        android:id="@+id/token_dest"
+        android:name="com.example.warrenchallenge.token.TokenActivityView"
+        android:label="token_activity"
+        tools:layout="@layout/token_activity"/>
+</navigation>
