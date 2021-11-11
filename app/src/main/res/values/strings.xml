@@ -10,4 +10,11 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="usernameText">Username</string>
     <string name="sign_in_text">Sign in</string>
+
+    <string-array name="emails_array">
+        <item>delgado.ohenrique@gmail.com</item>
+        <item>pablo_baldez@warren.com.br</item>
+        <item>mobile_test@warrenbrasil.com</item>
+        <item>henrique.delgado@warren.com.br</item>
+    </string-array>
 </resources>

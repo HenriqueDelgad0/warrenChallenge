@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.21944444444444444" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.346875" />
         <entry key="app/src/main/res/drawable/blind_eye.xml" value="0.346875" />
         <entry key="app/src/main/res/drawable/eye_icon.xml" value="0.346875" />

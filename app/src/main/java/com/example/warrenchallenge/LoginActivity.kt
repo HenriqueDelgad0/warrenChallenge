@@ -2,6 +2,8 @@ package com.example.warrenchallenge
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.warrenchallenge.account.AccountData
@@ -22,6 +24,13 @@ class LoginActivity: AppCompatActivity() {
 
         binding = LoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val textView = findViewById(R.id.usernameInput) as AutoCompleteTextView
+        val emails: Array<out String> = resources.getStringArray(R.array.emails_array)
+
+        val adapter = ArrayAdapter<String>(this,
+            android.R.layout.simple_list_item_1, emails)
+        textView.setAdapter(adapter)
 
         binding.loginButton.setOnClickListener{
 
@@ -48,6 +57,7 @@ class LoginActivity: AppCompatActivity() {
             })
 
         }
-
     }
+
+
 }
