@@ -5,4 +5,9 @@
     <string name="input_text">Type here</string>
     <string name="email">mobile_test@warrenbrasil.com</string>
     <string name="password">Warren123!</string>
+    <string name="passwordText">Password</string>
+    <string name="loginText">Login</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="usernameText">Username</string>
+    <string name="sign_in_text">Sign in</string>
 </resources>

@@ -25,13 +25,11 @@ class LoginActivity: AppCompatActivity() {
 
         binding.loginButton.setOnClickListener{
 
-            val login = binding.loginInput.text.toString()
+            val login = binding.usernameInput.text.toString()
             val password = binding.passwordInput.text.toString()
 
             enigmaticRepository.callRequest(login, password, object : CallBack<Token>{
                 override fun onSuccessful(token: Token) {
-                    binding.teste.text = "Token: ${token.accessToken}"
-
                     val dataToSend = AccountData(login, password, token.accessToken)
 
                     val intent = Intent(this@LoginActivity, TokenActivityView::class.java)
