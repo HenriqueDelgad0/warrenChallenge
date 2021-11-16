@@ -1,14 +1,19 @@
 package com.example.warrenchallenge
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings.Global.getString
+import android.provider.Settings.Secure.getString
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.TypedArrayUtils.getString
 import com.example.warrenchallenge.account.AccountData
 import com.example.warrenchallenge.data.APIException
 import com.example.warrenchallenge.data.CallBack
@@ -30,11 +35,13 @@ class LoginActivity: AppCompatActivity() {
         binding = LoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar) as ProgressBar
+//        if(isLogged()){
+//            initializeAccount()
+//        }
 
         val editText = findViewById<EditText>(R.id.passwordInput)
 
-        val textView = findViewById(R.id.usernameInput) as AutoCompleteTextView
+        val textView = findViewById<AutoCompleteTextView>(R.id.usernameInput)
         val emails: Array<out String> = resources.getStringArray(R.array.emails_array)
 
         val adapter = ArrayAdapter<String>(this,
@@ -82,9 +89,11 @@ class LoginActivity: AppCompatActivity() {
                 val dataToSend = AccountData(login, password, token.accessToken)
 
                 val intent = Intent(this@LoginActivity, TokenActivityView::class.java)
-                intent.putExtra("henrique", dataToSend)
+                //intent.putExtra("henrique", dataToSend)
+                finish()
                 this@LoginActivity.startActivity(intent)
                 stopLoading()
+                saveData(dataToSend)
             }
 
             override fun onFailure(t: Throwable) {
@@ -98,4 +107,32 @@ class LoginActivity: AppCompatActivity() {
         })
     }
 
+    private fun saveData(data : AccountData){
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.apply{
+            putString("TOKEN", data.token)
+            putString("EMAIL", data.login)
+            putString("PASSWORD", data.password)
+        }.apply()
+    }
+
+//    private fun isLogged(): Boolean{
+//        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+//        return sharedPreferences.contains("TOKEN")
+//    }
+
+//    private fun initializeAccount(){
+//        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+//        val login = sharedPreferences.getString("EMAIL", null).toString()
+//        val password = sharedPreferences.getString("PASSWORD", null).toString()
+//        val token = sharedPreferences.getString("TOKEN", null).toString()
+//
+//        val dataToSend = AccountData(login, password, token)
+//
+//        val intent = Intent(this@LoginActivity, TokenActivityView::class.java)
+//        intent.putExtra("henrique", dataToSend)
+//        finish()
+//        this@LoginActivity.startActivity(intent)
+//    }
 }
