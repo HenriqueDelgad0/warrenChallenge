@@ -14,6 +14,7 @@ import com.example.warrenchallenge.data.APIException
 import com.example.warrenchallenge.data.CallBack
 import com.example.warrenchallenge.data.EnigmaticRepository
 import com.example.warrenchallenge.databinding.LoginActivityBinding
+import com.example.warrenchallenge.extensions.hideKeyboard
 import com.example.warrenchallenge.model.Token
 import com.example.warrenchallenge.token.TokenActivityView
 import com.google.android.play.core.appupdate.v
@@ -31,6 +32,8 @@ class LoginActivity: AppCompatActivity() {
 
         val progressBar = findViewById<ProgressBar>(R.id.progressBar) as ProgressBar
 
+        val editText = findViewById<EditText>(R.id.passwordInput)
+
         val textView = findViewById(R.id.usernameInput) as AutoCompleteTextView
         val emails: Array<out String> = resources.getStringArray(R.array.emails_array)
 
@@ -38,68 +41,61 @@ class LoginActivity: AppCompatActivity() {
             android.R.layout.simple_list_item_1, emails)
         textView.setAdapter(adapter)
 
-        loginButton(progressBar)
+        callLoginButton(editText)
+        loginButton()
     }
 
-    fun callLoginButton(editText : EditText, progressBar: ProgressBar){
-        editText.setOnKeyListener(View.OnKeyListener{_, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP){
-                loginButton(progressBar)
-                return@OnKeyListener true
+    private fun loginButton() {
+        binding.loginButton.setOnClickListener{
+            loginRequest()
+        }
+    }
+
+    private fun progressBarLoading(){
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun stopLoading(){
+        binding.progressBar.visibility = View.INVISIBLE
+    }
+
+    private fun callLoginButton(editText: EditText){
+        val editText = findViewById<EditText>(R.id.passwordInput)
+        editText.setOnEditorActionListener(TextView.OnEditorActionListener{ v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                loginRequest()
+                hideKeyboard()
+                return@OnEditorActionListener true
             }
             false
         })
     }
 
-    private fun loginButton(progressBar: ProgressBar) {
-        binding.loginButton.setOnClickListener{
+    private fun loginRequest(){
+        val login = binding.usernameInput.text.toString()
+        val password = binding.passwordInput.text.toString()
 
-            val login = binding.usernameInput.text.toString()
-            val password = binding.passwordInput.text.toString()
+        progressBarLoading()
 
-            progressBarLoading(progressBar)
+        enigmaticRepository.callRequest(login, password, object : CallBack<Token>{
+            override fun onSuccessful(token: Token) {
+                val dataToSend = AccountData(login, password, token.accessToken)
 
-            enigmaticRepository.callRequest(login, password, object : CallBack<Token>{
-                override fun onSuccessful(token: Token) {
-                    val dataToSend = AccountData(login, password, token.accessToken)
-
-                    val intent = Intent(this@LoginActivity, TokenActivityView::class.java)
-                    intent.putExtra("henrique", dataToSend)
-                    this@LoginActivity.startActivity(intent)
-                    stopLoading(progressBar)
-                }
-
-                override fun onFailure(t: Throwable) {
-                    if(t is APIException) {
-                        Toast.makeText(this@LoginActivity, t.errorToken.error, Toast.LENGTH_SHORT).show()
-                    }else {
-
-                        Toast.makeText(this@LoginActivity, "Deu ruim", Toast.LENGTH_SHORT).show()
-                    }
-                    stopLoading(progressBar)
-                }
-            })
-
-        }
-    }
-
-    private fun progressBarLoading(progressBar: ProgressBar){
-        val handler = Handler()
-        progressBar.visibility = View.VISIBLE
-        var i = progressBar.progress
-
-        Thread(Runnable {
-            while(i < 100) {
-                i += 1
-                handler.post(Runnable {
-                    progressBar.progress = i
-                })
+                val intent = Intent(this@LoginActivity, TokenActivityView::class.java)
+                intent.putExtra("henrique", dataToSend)
+                this@LoginActivity.startActivity(intent)
+                stopLoading()
             }
-        }).start()
-    }
 
-    private fun stopLoading(progressBar: ProgressBar){
-        progressBar.visibility = View.INVISIBLE
+            override fun onFailure(t: Throwable) {
+                if(t is APIException) {
+                    Toast.makeText(this@LoginActivity, t.errorToken.error, Toast.LENGTH_SHORT).show()
+                }else {
+                    Toast.makeText(this@LoginActivity, "Deu ruim", Toast.LENGTH_SHORT).show()
+                }
+                stopLoading()
+            }
+        })
     }
 
 }
