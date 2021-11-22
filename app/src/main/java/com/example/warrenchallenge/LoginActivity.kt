@@ -27,17 +27,13 @@ import com.google.android.play.core.appupdate.v
 
 class LoginActivity: AppCompatActivity() {
     private lateinit var binding: LoginActivityBinding
-    private var enigmaticRepository = EnigmaticRepository()
+    private val enigmaticRepository = EnigmaticRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = LoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        if(isLogged()){
-//            initializeAccount()
-//        }
 
         val editText = findViewById<EditText>(R.id.passwordInput)
 
@@ -116,23 +112,4 @@ class LoginActivity: AppCompatActivity() {
             putString("PASSWORD", data.password)
         }.apply()
     }
-
-//    private fun isLogged(): Boolean{
-//        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-//        return sharedPreferences.contains("TOKEN")
-//    }
-
-//    private fun initializeAccount(){
-//        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-//        val login = sharedPreferences.getString("EMAIL", null).toString()
-//        val password = sharedPreferences.getString("PASSWORD", null).toString()
-//        val token = sharedPreferences.getString("TOKEN", null).toString()
-//
-//        val dataToSend = AccountData(login, password, token)
-//
-//        val intent = Intent(this@LoginActivity, TokenActivityView::class.java)
-//        intent.putExtra("henrique", dataToSend)
-//        finish()
-//        this@LoginActivity.startActivity(intent)
-//    }
 }

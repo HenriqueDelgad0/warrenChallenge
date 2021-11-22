@@ -10,6 +10,7 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="usernameText">Username</string>
     <string name="sign_in_text">Sign in</string>
+    <string name="cardsTitle">Minhas carteiras</string>
 
     <string-array name="emails_array">
         <item>delgado.ohenrique@gmail.com</item>

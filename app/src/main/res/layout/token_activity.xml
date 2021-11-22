@@ -9,67 +9,28 @@
     app:navGraph="@navigation/mobile_navigation">
 
     <TextView
-        android:id="@+id/resultEmail"
-        android:layout_width="336dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        tools:text="Token result"
+        android:id="@+id/cardTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/resultPassword"/>
-
-    <TextView
-        android:id="@+id/resultPassword"
-        android:layout_width="336dp"
-        android:layout_height="60dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="30dp"
-        android:textAlignment="viewStart"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tokenBackground"
-        app:layout_constraintTop_toBottomOf="@+id/resultEmail"
-        tools:text="Token result" />
+        android:textColor="@color/black"
+        android:text="@string/cardsTitle" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/tokenBackground"
-        android:layout_width="377dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="176dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/purple_200"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/resultToken"
-            android:layout_width="335dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="TextView"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tokenBackground"
-            app:layout_constraintEnd_toEndOf="@id/tokenBackground"
-            app:layout_constraintStart_toStartOf="@id/tokenBackground"
-            app:layout_constraintTop_toTopOf="@id/tokenBackground" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        app:layout_constraintTop_toBottomOf="@id/cardTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
