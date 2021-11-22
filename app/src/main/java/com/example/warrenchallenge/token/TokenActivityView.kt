@@ -1,6 +1,8 @@
 package com.example.warrenchallenge.token
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import com.example.warrenchallenge.data.EnigmaticRepository
 import com.example.warrenchallenge.databinding.ActivityMainBinding
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.warrenchallenge.LoginActivity
 import com.example.warrenchallenge.account.AccountData
 import com.example.warrenchallenge.databinding.TokenActivityBinding
 
@@ -26,16 +29,30 @@ class TokenActivityView(): AppCompatActivity() {
         binding = TokenActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val result = intent.getParcelableExtra<AccountData>("henrique")
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
 
-        binding.resultEmail.text = "Login: ${result!!.login}"
-        binding.resultPassword.text = "Password: ${result.password}"
-        binding.resultToken.text = "Token: ${result.token}"
+        if(!hasData()){
+            val intent = Intent(this@TokenActivityView, LoginActivity::class.java)
+            finish()
+            this@TokenActivityView.startActivity(intent)
+        }
 
+        binding.resultEmail.text = "Login: ${sharedPreferences.getString("EMAIL", null)}"
+        binding.resultPassword.text = "Password: ${sharedPreferences.getString("PASSWORD", null)}"
+        binding.resultToken.text = "Token: ${sharedPreferences.getString("TOKEN", null)}"
+
+//        val result = intent.getParcelableExtra<AccountData>("henrique")
+//
+//        binding.resultEmail.text = "Login: ${result!!.login}"
+//        binding.resultPassword.text = "Password: ${result.password}"
+//        binding.resultToken.text = "Token: ${result.token}"
 
     }
 
-
+    private fun hasData(): Boolean{
+        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences.contains("TOKEN")
+    }
 
 
 }

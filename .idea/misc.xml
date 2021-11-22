@@ -9,11 +9,13 @@
         <entry key="app/src/main/res/drawable/eye_icon.xml" value="0.346875" />
         <entry key="app/src/main/res/drawable/ic_baseline_remove_red_eye_24.xml" value="0.346875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3066123188405797" />
-        <entry key="app/src/main/res/layout/login_activity.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/login_activity.xml" value="0.33" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/token_activity.xml" value="0.33" />
         <entry key="app/src/main/res/layout/token_fragment.xml" value="0.3066123188405797" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/login_background.xml" value="0.31666666666666665" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/login_background_round.xml" value="0.19270833333333334" />
       </map>
     </option>
   </component>
