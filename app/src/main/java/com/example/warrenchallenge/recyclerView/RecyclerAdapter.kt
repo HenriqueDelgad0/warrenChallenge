@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,16 +12,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.warrenchallenge.R
 import com.example.warrenchallenge.cardsAPI.CardRepository
 import com.example.warrenchallenge.cardsAPI.Data
+import com.example.warrenchallenge.extensions.formatMoney
 import com.example.warrenchallenge.cardsAPI.TokenData
 import com.example.warrenchallenge.data.APIException
 import com.example.warrenchallenge.data.CallBack
+import com.example.warrenchallenge.extensions.calculateProgressBar
 import com.google.gson.internal.bind.util.ISO8601Utils.format
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 import java.lang.String.format
 import java.text.DecimalFormat
 import java.text.MessageFormat.format
-import kotlin.Double as Double1
 
 class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     val cardData = mutableListOf<Data>()
@@ -33,9 +35,10 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val auxiliar = cardData[position]
         holder.itemTitle.text = auxiliar.name
-        holder.itemMoney.text = formatMoneyValue(auxiliar.goalAmount.toString())
+        holder.itemMoney.text = auxiliar.goalAmount.formatMoney()
         Picasso.get().load(auxiliar.background.regular).resize(328,200)
             .centerCrop().into(holder.itemImage)
+        holder.progressBar.progress = calculateProgressBar(auxiliar.goalAmount, auxiliar.totalBalance).toInt()
     }
 
     override fun getItemCount(): Int {
@@ -46,11 +49,9 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
         var itemImage: ImageView = itemView.findViewById(R.id.backgroundImage)
         var itemTitle: TextView = itemView.findViewById(R.id.itemTitle)
         var itemMoney: TextView = itemView.findViewById(R.id.itemMoneyValue)
+        var progressBar: ProgressBar = itemView.findViewById(R.id.horizontalProgressbar)
     }
 
-    private fun formatMoneyValue(number: String): String {
-        val decimalFormat = DecimalFormat("###,###,##0.00")
-        return decimalFormat.format(Double.parseDouble(number))
-    }
+
 
 }

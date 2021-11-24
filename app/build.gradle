@@ -75,4 +75,7 @@ dependencies {
     implementation 'io.github.vicmikhailau:MaskedEditText:4.0.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //Testes
+    testImplementation 'junit:junit:4.13.2'
+
 }

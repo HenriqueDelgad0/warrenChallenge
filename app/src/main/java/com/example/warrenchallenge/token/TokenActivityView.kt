@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.warrenchallenge.data.EnigmaticRepository
@@ -51,12 +52,6 @@ class TokenActivityView(): AppCompatActivity() {
         adapter = RecyclerAdapter()
         recyclerView.adapter = adapter
 
-        val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
-
-//        binding.resultEmail.text = "Login: ${sharedPreferences.getString("EMAIL", null)}"
-//        binding.resultPassword.text = "Password: ${sharedPreferences.getString("PASSWORD", null)}"
-//        binding.resultToken.text = "Token: ${sharedPreferences.getString("TOKEN", null)}"
-
         if(!hasData()){
             val intent = Intent(this@TokenActivityView, LoginActivity::class.java)
             finish()
@@ -64,6 +59,8 @@ class TokenActivityView(): AppCompatActivity() {
         }
 
         cardImageRequest()
+
+
     }
 
     private fun hasData(): Boolean{

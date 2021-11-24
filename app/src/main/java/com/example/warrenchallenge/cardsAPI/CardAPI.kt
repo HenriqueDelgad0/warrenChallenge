@@ -20,7 +20,7 @@ data class Data(
     val name: String,
     val background: Background,
     val totalBalance: Float,
-    val goalAmount: Int,
+    val goalAmount: Double,
     val goalDate: String
 )
 
