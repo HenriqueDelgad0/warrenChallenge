@@ -1,24 +1,22 @@
 package com.example.warrenchallenge.card
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.warrenchallenge.LoginActivity
+import com.example.warrenchallenge.cardAPI.CardAPI
 import com.example.warrenchallenge.cardAPI.CardRepository
-import com.example.warrenchallenge.cardAPI.TokenData
-import com.example.warrenchallenge.data.APIException
-import com.example.warrenchallenge.data.CallBack
 import com.example.warrenchallenge.databinding.CardActivityBinding
 import com.example.warrenchallenge.recyclerView.RecyclerAdapter
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-class CardActivityView(): AppCompatActivity() {
+class CardActivityView: AppCompatActivity() {
     private lateinit var binding: CardActivityBinding
     private lateinit var viewModel: CardViewModel
 
@@ -41,44 +39,30 @@ class CardActivityView(): AppCompatActivity() {
         adapter = RecyclerAdapter()
         recyclerView.adapter = adapter
 
-        if(!hasData()){
+        if(!viewModel.hasDate()){
             val intent = Intent(this@CardActivityView, LoginActivity::class.java)
             finish()
             this@CardActivityView.startActivity(intent)
         }
 
         viewModel = ViewModelProvider(this).get(CardViewModel :: class.java)
+        viewModel.repository = CardRepository(createCardApi())
+        viewModel.tokenRepository = SharedPreferencesTokenRepository(createSharedPrefences())
         viewModel.getGoals().observe(this, { tokenData ->
             adapter.cardData.addAll(tokenData.portfolios)
             adapter.notifyDataSetChanged()
         })
-
-
     }
 
-    private fun hasData(): Boolean{
-        val sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE)
-        return sharedPreferences.contains("TOKEN")
+    private fun createCardApi(): CardAPI {
+        return Retrofit.Builder()
+            .baseUrl("https://enigmatic-bayou-48219.herokuapp.com/api/v2/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(CardAPI::class.java)
     }
 
-
-    //    private fun cardImageRequest(){
-//        val token = getSharedPreferences("sharedPrefs", MODE_PRIVATE).getString("TOKEN", null).toString()
-//
-//        cardRepository.callRequest(token, object : CallBack<TokenData>{
-//            @SuppressLint("NotifyDataSetChanged")
-//            override fun onSuccessful(token: TokenData) {
-//                adapter.cardData.addAll(token.portfolios)
-//                adapter.notifyDataSetChanged()
-//            }
-//
-//            override fun onFailure(t: Throwable) {
-//                if(t is APIException) {
-//                    Toast.makeText(this@TokenActivityView, t.errorToken.error, Toast.LENGTH_SHORT).show()
-//                }else {
-//                    Toast.makeText(this@TokenActivityView, "Deu ruim", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        })
-//    }
+    private fun createSharedPrefences(): SharedPreferences {
+        return getSharedPreferences("sharedPrefs", MODE_PRIVATE)
+    }
 }

@@ -10,15 +10,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class CardRepository {
+class CardRepository(private val cardAPI: CardAPI) {
     fun callRequest(token: String, callBack: CallBack<TokenData>){
-        val baseUrl = "https://enigmatic-bayou-48219.herokuapp.com/api/v2/"
-
-        Retrofit
-            .Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create()).build()
-            .create(CardAPI::class.java)
+        cardAPI
             .makeRequest(token)
             .enqueue(object : retrofit2.Callback<TokenData> {
                 override fun onResponse(call: Call<TokenData>, response: Response<TokenData>) {
