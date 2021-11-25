@@ -1,15 +1,10 @@
-package com.example.warrenchallenge.cardsAPI
+package com.example.warrenchallenge.cardAPI
 
-import android.util.Log
 import com.example.warrenchallenge.data.APIException
 import com.example.warrenchallenge.data.CallBack
 import com.example.warrenchallenge.model.ErrorToken
-import com.example.warrenchallenge.model.Token
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import retrofit2.*
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit

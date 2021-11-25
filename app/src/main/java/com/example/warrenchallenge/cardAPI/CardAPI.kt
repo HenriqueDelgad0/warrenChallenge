@@ -1,4 +1,4 @@
-package com.example.warrenchallenge.cardsAPI
+package com.example.warrenchallenge.cardAPI
 
 import retrofit2.Call
 import retrofit2.http.*

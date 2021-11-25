@@ -6,23 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.warrenchallenge.R
-import com.example.warrenchallenge.cardsAPI.CardRepository
-import com.example.warrenchallenge.cardsAPI.Data
+import com.example.warrenchallenge.cardAPI.Data
 import com.example.warrenchallenge.extensions.formatMoney
-import com.example.warrenchallenge.cardsAPI.TokenData
-import com.example.warrenchallenge.data.APIException
-import com.example.warrenchallenge.data.CallBack
 import com.example.warrenchallenge.extensions.calculateProgressBar
-import com.google.gson.internal.bind.util.ISO8601Utils.format
 import com.squareup.picasso.Picasso
-import org.w3c.dom.Text
-import java.lang.String.format
-import java.text.DecimalFormat
-import java.text.MessageFormat.format
 
 class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     val cardData = mutableListOf<Data>()

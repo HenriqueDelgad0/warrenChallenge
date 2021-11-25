@@ -2,18 +2,11 @@ package com.example.warrenchallenge
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
-import android.provider.Settings.Global.getString
-import android.provider.Settings.Secure.getString
-import android.util.Log
-import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.TypedArrayUtils.getString
 import com.example.warrenchallenge.account.AccountData
 import com.example.warrenchallenge.data.APIException
 import com.example.warrenchallenge.data.CallBack
@@ -21,8 +14,7 @@ import com.example.warrenchallenge.data.EnigmaticRepository
 import com.example.warrenchallenge.databinding.LoginActivityBinding
 import com.example.warrenchallenge.extensions.hideKeyboard
 import com.example.warrenchallenge.model.Token
-import com.example.warrenchallenge.token.TokenActivityView
-import com.google.android.play.core.appupdate.v
+import com.example.warrenchallenge.card.CardActivityView
 
 
 class LoginActivity: AppCompatActivity() {
@@ -83,9 +75,7 @@ class LoginActivity: AppCompatActivity() {
         enigmaticRepository.callRequest(login, password, object : CallBack<Token>{
             override fun onSuccessful(token: Token) {
                 val dataToSend = AccountData(login, password, token.accessToken)
-
-                val intent = Intent(this@LoginActivity, TokenActivityView::class.java)
-                //intent.putExtra("henrique", dataToSend)
+                val intent = Intent(this@LoginActivity, CardActivityView::class.java)
                 finish()
                 this@LoginActivity.startActivity(intent)
                 stopLoading()
