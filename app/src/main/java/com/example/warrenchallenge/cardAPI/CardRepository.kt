@@ -31,7 +31,5 @@ class CardRepository(private val cardAPI: CardAPI) {
                     callBack.onFailure(t)
                 }
             })
-
-
     }
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.warrenchallenge.LoginActivity
 import com.example.warrenchallenge.cardAPI.CardAPI
 import com.example.warrenchallenge.cardAPI.CardRepository
+import com.example.warrenchallenge.data.PostData
 import com.example.warrenchallenge.databinding.CardActivityBinding
 import com.example.warrenchallenge.recyclerView.RecyclerAdapter
 import retrofit2.Retrofit
@@ -18,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class CardActivityView: AppCompatActivity() {
     private lateinit var binding: CardActivityBinding
-    private lateinit var viewModel: CardViewModel
+    private val viewModel: CardViewModel by viewModels()
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var adapter: RecyclerAdapter
@@ -39,19 +41,18 @@ class CardActivityView: AppCompatActivity() {
         adapter = RecyclerAdapter()
         recyclerView.adapter = adapter
 
-        if(!viewModel.hasDate()){
-            val intent = Intent(this@CardActivityView, LoginActivity::class.java)
-            finish()
-            this@CardActivityView.startActivity(intent)
-        }
-
-        viewModel = ViewModelProvider(this).get(CardViewModel :: class.java)
         viewModel.repository = CardRepository(createCardApi())
         viewModel.tokenRepository = SharedPreferencesTokenRepository(createSharedPrefences())
         viewModel.getGoals().observe(this, { tokenData ->
             adapter.cardData.addAll(tokenData.portfolios)
             adapter.notifyDataSetChanged()
         })
+
+        if(!viewModel.hasDate()){
+            val intent = Intent(this@CardActivityView, LoginActivity::class.java)
+            finish()
+            this@CardActivityView.startActivity(intent)
+        }
     }
 
     private fun createCardApi(): CardAPI {

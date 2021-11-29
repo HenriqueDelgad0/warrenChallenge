@@ -27,7 +27,7 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
         holder.itemMoney.text = auxiliar.goalAmount.formatMoney()
         Picasso.get().load(auxiliar.background.regular).resize(328,200)
             .centerCrop().into(holder.itemImage)
-        holder.progressBar.progress = calculateProgressBar(auxiliar.goalAmount, auxiliar.totalBalance).toInt()
+        holder.progressBar.progress = calculateProgressBar(auxiliar.totalBalance, auxiliar.goalAmount).toInt()
     }
 
     override fun getItemCount(): Int {

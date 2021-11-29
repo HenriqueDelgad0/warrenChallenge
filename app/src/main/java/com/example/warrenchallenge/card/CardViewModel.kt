@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.example.warrenchallenge.cardAPI.CardRepository
 import com.example.warrenchallenge.cardAPI.TokenData
 import com.example.warrenchallenge.data.CallBack
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Named
 
-
-class CardViewModel : ViewModel(){
-
+@HiltViewModel
+class CardViewModel: ViewModel(){
     lateinit var repository: CardRepository
     lateinit var tokenRepository: TokenRepository
 
@@ -17,12 +18,6 @@ class CardViewModel : ViewModel(){
         MutableLiveData<TokenData>().also {
             loadGoals()
         }
-    }
-
-    fun hasDate() = tokenRepository.hasData()
-
-    fun getGoals(): LiveData<TokenData> {
-        return goals
     }
 
     private fun loadGoals() {
@@ -35,5 +30,11 @@ class CardViewModel : ViewModel(){
 
             }
         })
+    }
+
+    fun hasDate() = tokenRepository.hasData()
+
+    fun getGoals(): LiveData<TokenData> {
+        return goals
     }
 }
