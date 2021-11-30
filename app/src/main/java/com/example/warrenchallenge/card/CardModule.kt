@@ -1,22 +1,17 @@
 package com.example.warrenchallenge.card
 
-import com.example.warrenchallenge.cardAPI.CardAPI
-import com.example.warrenchallenge.cardAPI.CardRepository
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.scopes.ActivityScoped
-import javax.inject.Named
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
-@InstallIn(ActivityComponent::class)
-
+@InstallIn(ViewModelComponent::class)
 abstract class CardModule {
-    @Binds
-    abstract fun bindCardRepository(bind: CardRepository): CardAPI
 
+    @Binds
+    @ViewModelScoped
+    abstract fun bindTokenRepository(instance: SharedPreferencesTokenRepository): TokenRepository
 
 }

@@ -25,10 +25,7 @@ import javax.inject.Inject
 class CardActivityView: AppCompatActivity() {
     private lateinit var binding: CardActivityBinding
 
-    @Inject
-    lateinit var teste: CardRepository
-
-    val viewModel: CardViewModel by viewModels()
+    private val viewModel: CardViewModel by viewModels()
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var adapter: RecyclerAdapter
@@ -49,8 +46,6 @@ class CardActivityView: AppCompatActivity() {
         adapter = RecyclerAdapter()
         recyclerView.adapter = adapter
 
-        viewModel.repository = teste
-        viewModel.tokenRepository = SharedPreferencesTokenRepository(createSharedPrefences())
         viewModel.getGoals().observe(this, { tokenData ->
             adapter.cardData.addAll(tokenData.portfolios)
             adapter.notifyDataSetChanged()

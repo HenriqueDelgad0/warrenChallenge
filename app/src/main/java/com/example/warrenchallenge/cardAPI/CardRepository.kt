@@ -13,7 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class CardRepository @Inject constructor(private val cardAPI: CardAPI){
     fun callRequest(token: String, callBack: CallBack<TokenData>){
         cardAPI
