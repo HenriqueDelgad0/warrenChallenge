@@ -15,12 +15,20 @@ import com.example.warrenchallenge.cardAPI.CardRepository
 import com.example.warrenchallenge.data.PostData
 import com.example.warrenchallenge.databinding.CardActivityBinding
 import com.example.warrenchallenge.recyclerView.RecyclerAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CardActivityView: AppCompatActivity() {
     private lateinit var binding: CardActivityBinding
-    private val viewModel: CardViewModel by viewModels()
+
+    @Inject
+    lateinit var teste: CardRepository
+
+    val viewModel: CardViewModel by viewModels()
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var adapter: RecyclerAdapter
@@ -41,7 +49,7 @@ class CardActivityView: AppCompatActivity() {
         adapter = RecyclerAdapter()
         recyclerView.adapter = adapter
 
-        viewModel.repository = CardRepository(createCardApi())
+        viewModel.repository = teste
         viewModel.tokenRepository = SharedPreferencesTokenRepository(createSharedPrefences())
         viewModel.getGoals().observe(this, { tokenData ->
             adapter.cardData.addAll(tokenData.portfolios)
