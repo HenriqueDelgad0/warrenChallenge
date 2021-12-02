@@ -50,7 +50,7 @@ class LoginView: AppCompatActivity() {
 
         saveLoginData(login, password)
         binding.loginButton.setOnClickListener{
-            if(viewModel.loginRequest(login, password) != null){
+            if(){
                 val intent = Intent(this@LoginView, CardView::class.java)
                 finish()
                 this@LoginView.startActivity(intent)

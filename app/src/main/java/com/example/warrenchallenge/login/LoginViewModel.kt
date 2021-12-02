@@ -29,10 +29,9 @@ class LoginViewModel @Inject constructor(
 
     fun loginRequest(login: String, password: String){
         enigmaticRepository.callRequest(login, password, object : CallBack<Token> {
-            override fun onSuccessful(token: Token): String {
+            override fun onSuccessful(token: Token) {
                 val dataToSend = token.accessToken
                 hasToken(dataToSend)
-                return token.accessToken
             }
 
             override fun onFailure(t: Throwable) {
@@ -45,7 +44,7 @@ class LoginViewModel @Inject constructor(
 
     }
 
-    fun hasToken(token: String?): String?{
+    fun hasToken(token: String): String{
         return token
     }
 
