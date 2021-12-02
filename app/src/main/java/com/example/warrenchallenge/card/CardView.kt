@@ -2,30 +2,22 @@ package com.example.warrenchallenge.card
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.warrenchallenge.LoginActivity
-import com.example.warrenchallenge.cardAPI.CardAPI
-import com.example.warrenchallenge.cardAPI.CardRepository
-import com.example.warrenchallenge.data.PostData
+import com.example.warrenchallenge.login.LoginView
 import com.example.warrenchallenge.databinding.CardActivityBinding
 import com.example.warrenchallenge.recyclerView.RecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class CardActivityView: AppCompatActivity() {
+class CardView: AppCompatActivity() {
     private lateinit var binding: CardActivityBinding
 
     private val viewModel: CardViewModel by viewModels()
+
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var adapter: RecyclerAdapter
@@ -35,6 +27,7 @@ class CardActivityView: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = CardActivityBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         val recyclerView = binding.recyclerView
@@ -52,21 +45,9 @@ class CardActivityView: AppCompatActivity() {
         })
 
         if(!viewModel.hasDate()){
-            val intent = Intent(this@CardActivityView, LoginActivity::class.java)
+            val intent = Intent(this@CardView, LoginView::class.java)
             finish()
-            this@CardActivityView.startActivity(intent)
+            this@CardView.startActivity(intent)
         }
-    }
-
-    private fun createCardApi(): CardAPI {
-        return Retrofit.Builder()
-            .baseUrl("https://enigmatic-bayou-48219.herokuapp.com/api/v2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(CardAPI::class.java)
-    }
-
-    private fun createSharedPrefences(): SharedPreferences {
-        return getSharedPreferences("sharedPrefs", MODE_PRIVATE)
     }
 }

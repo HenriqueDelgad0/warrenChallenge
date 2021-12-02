@@ -20,3 +20,11 @@ class SharedPreferencesTokenRepository @Inject constructor(private val sharedPre
         return sharedPreferences.contains("TOKEN")
     }
 }
+
+interface LoginData {
+
+    fun getLoginData(): LoginData
+
+    fun hasData(): Boolean
+}
+

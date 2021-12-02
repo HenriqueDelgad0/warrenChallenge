@@ -15,7 +15,6 @@ class CardViewModel @Inject constructor(
     private val tokenRepository: TokenRepository
 ): ViewModel(){
 
-
     private val goals: MutableLiveData<TokenData> by lazy {
         MutableLiveData<TokenData>().also {
             loadGoals()

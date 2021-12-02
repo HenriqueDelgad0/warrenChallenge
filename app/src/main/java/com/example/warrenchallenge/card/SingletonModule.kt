@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import com.example.warrenchallenge.cardAPI.CardAPI
+import com.example.warrenchallenge.data.EnigmaticApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +36,11 @@ class SingletonModule {
     @Provides
     fun provideCardApi(retrofit: Retrofit): CardAPI {
         return retrofit.create(CardAPI::class.java)
+    }
+
+    @Provides
+    fun provideEnigmaticApi(retrofit: Retrofit) : EnigmaticApi{
+        return retrofit.create(EnigmaticApi::class.java)
     }
 
 }
