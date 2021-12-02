@@ -4,6 +4,7 @@ import com.example.warrenchallenge.model.Token
 import retrofit2.Call
 import retrofit2.http.*
 
+
 interface EnigmaticApi {
     @POST("account/login")
     fun makeRequest(

@@ -11,7 +11,7 @@ class AccountData(
     val token: String) : Parcelable {
 }
 
-class LoginData(
+class UserData(
     val login: String,
     val password: String
 )

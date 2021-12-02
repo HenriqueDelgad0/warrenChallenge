@@ -41,29 +41,24 @@ class LoginView: AppCompatActivity() {
             android.R.layout.simple_list_item_1, emails)
         textView.setAdapter(adapter)
 
+        viewModel.getTokenResponse().observe(this, { loginData ->
+            goToCardActivity()
+            stopLoading()
+        })
+
         callLoginButton()
 
         binding.loginButton.setOnClickListener{
-            functionLogin()
+            progressBarLoading()
+            loginButton()
         }
     }
 
-    private fun functionLogin() {
+    private fun loginButton() {
         val login = binding.usernameInput.text.toString()
         val password = binding.passwordInput.text.toString()
 
         viewModel.loginRequest(login, password)
-
-        viewModel.getTokenResponse().observe(this, { response ->
-            when(response) {
-                is String -> {
-                    if(response != null) {
-                        saveLoginData(login, password, response)
-                        goToCardActivity()
-                    }
-                }
-            }
-        })
     }
 
     private fun goToCardActivity() {
@@ -76,24 +71,13 @@ class LoginView: AppCompatActivity() {
         val getEditText = binding.passwordInput
         getEditText.setOnEditorActionListener(TextView.OnEditorActionListener{ v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE){
-                //loginButton()
+                loginButton()
                 hideKeyboard()
                 return@OnEditorActionListener true
             }
             false
         })
     }
-
-    private fun saveLoginData(login: String, password: String, token: String){
-        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.apply{
-            putString("EMAIL", login)
-            putString("PASSWORD", password)
-            putString("TOKEN", token)
-        }.apply()
-    }
-
 
     private fun progressBarLoading(){
         binding.progressBar.visibility = View.VISIBLE

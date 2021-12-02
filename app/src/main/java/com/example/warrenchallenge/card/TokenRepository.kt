@@ -1,6 +1,8 @@
 package com.example.warrenchallenge.card
 
+import android.content.Context
 import android.content.SharedPreferences
+import com.example.warrenchallenge.account.UserData
 import javax.inject.Inject
 
 interface TokenRepository {
@@ -9,6 +11,9 @@ interface TokenRepository {
 
     fun hasData(): Boolean
 
+    fun saveTokenData(
+        token: String,
+    )
 }
 
 class SharedPreferencesTokenRepository @Inject constructor(private val sharedPreferences: SharedPreferences) : TokenRepository {
@@ -19,12 +24,12 @@ class SharedPreferencesTokenRepository @Inject constructor(private val sharedPre
     override fun hasData(): Boolean {
         return sharedPreferences.contains("TOKEN")
     }
-}
 
-interface LoginData {
-
-    fun getLoginData(): LoginData
-
-    fun hasData(): Boolean
+    override fun saveTokenData(token: String) {
+        val editor = sharedPreferences.edit()
+        editor.apply{
+            putString("TOKEN", token)
+        }
+    }
 }
 

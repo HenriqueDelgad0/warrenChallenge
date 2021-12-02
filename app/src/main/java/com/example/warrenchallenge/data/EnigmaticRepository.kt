@@ -14,11 +14,7 @@ class EnigmaticRepository @Inject constructor(private val enigmaticApi: Enigmati
     fun callRequest(email : String, password : String, callBack: CallBack<Token>) {
         val baseUrl = "https://enigmatic-bayou-48219.herokuapp.com/api/v2/"
 
-        Retrofit
-            .Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create()).build()
-            .create(EnigmaticApi::class.java)
+        enigmaticApi
             .makeRequest(PostData(email, password))
             .enqueue(object : Callback<Token> {
                 override fun onResponse(call: Call<Token>, response: Response<Token>) {
@@ -42,15 +38,4 @@ class EnigmaticRepository @Inject constructor(private val enigmaticApi: Enigmati
 
 class APIException(val errorToken: ErrorToken) : Exception("Invalid exception"){
 
-}
-
-class sharedPreferencesLoginData @Inject constructor(private val sharedPreferences: SharedPreferences) :
-    TokenRepository {
-    override fun getApiToken(): String? {
-        return sharedPreferences.getString("TOKEN", null)
-    }
-
-    override fun hasData(): Boolean {
-        return sharedPreferences.contains("TOKEN")
-    }
 }
