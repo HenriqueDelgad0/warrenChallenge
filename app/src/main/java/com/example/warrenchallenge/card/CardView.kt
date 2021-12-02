@@ -15,10 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CardView: AppCompatActivity() {
     private lateinit var binding: CardActivityBinding
-
     private val viewModel: CardViewModel by viewModels()
-
-
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var adapter: RecyclerAdapter
 

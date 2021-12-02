@@ -24,7 +24,6 @@ class EnigmaticRepository @Inject constructor(private val enigmaticApi: Enigmati
                 override fun onResponse(call: Call<Token>, response: Response<Token>) {
                     if(response.code() == 200){
                         callBack.onSuccessful(checkNotNull(response.body()))
-                        println(response.body())
                     }else{
                         val gson = Gson()
                         val type = object : TypeToken<ErrorToken>() {}.type

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.warrenchallenge.account.AccountData
@@ -19,33 +20,24 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val enigmaticRepository: EnigmaticRepository
-): ViewModel() {
+class LoginViewModel @Inject constructor(private val enigmaticRepository: EnigmaticRepository): ViewModel() {
+    private var tokenResponse: MutableLiveData<String> = MutableLiveData()
 
-    private val userData: MutableLiveData<AccountData> by lazy {
-        MutableLiveData<AccountData>()
+    fun getTokenResponse(): LiveData<String> {
+        return tokenResponse
     }
 
     fun loginRequest(login: String, password: String){
         enigmaticRepository.callRequest(login, password, object : CallBack<Token> {
             override fun onSuccessful(token: Token) {
-                val dataToSend = token.accessToken
-                hasToken(dataToSend)
+
+                tokenResponse.postValue(token.accessToken)
             }
 
             override fun onFailure(t: Throwable) {
+                println("Failure")
 
             }
         })
     }
-
-    fun callLoginRequest(){
-
-    }
-
-    fun hasToken(token: String): String{
-        return token
-    }
-
 }
