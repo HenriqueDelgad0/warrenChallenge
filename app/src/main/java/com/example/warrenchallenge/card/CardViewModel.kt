@@ -3,10 +3,12 @@ package com.example.warrenchallenge.card
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.warrenchallenge.cardAPI.CardRepository
 import com.example.warrenchallenge.cardAPI.TokenData
 import com.example.warrenchallenge.data.CallBack
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,15 +24,10 @@ class CardViewModel @Inject constructor(
     }
 
     private fun loadGoals() {
-        repository.callRequest(tokenRepository.getApiToken()!!, object : CallBack<TokenData> {
-            override fun onSuccessful(token: TokenData) {
-                goals.value = token
-            }
-
-            override fun onFailure(t: Throwable) {
-
-            }
-        })
+        viewModelScope.launch {
+            val token = repository.callRequest(tokenRepository.getApiToken()!!)
+            goals.value  = token
+        }
     }
 
     fun hasDate() = tokenRepository.hasData()

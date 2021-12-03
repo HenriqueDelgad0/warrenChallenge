@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.viewModelScope
 import com.example.warrenchallenge.R
 import com.example.warrenchallenge.account.AccountData
-import com.example.warrenchallenge.data.APIException
 import com.example.warrenchallenge.data.CallBack
 import com.example.warrenchallenge.data.EnigmaticRepository
 import com.example.warrenchallenge.databinding.LoginActivityBinding
@@ -41,7 +40,7 @@ class LoginView: AppCompatActivity() {
             android.R.layout.simple_list_item_1, emails)
         textView.setAdapter(adapter)
 
-        viewModel.getTokenResponse().observe(this, { loginData ->
+        viewModel.getTokenResponse().observe(this, {
             goToCardActivity()
             stopLoading()
         })
