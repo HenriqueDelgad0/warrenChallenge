@@ -15,3 +15,5 @@ data class PostData (
     var email: String,
     var password: String
 )
+
+data class MyEntity(val isComercialTime: Boolean)
