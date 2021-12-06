@@ -6,12 +6,14 @@ import retrofit2.http.*
 
 interface EnigmaticApi {
     @POST("account/login")
-    fun makeRequest(
+    suspend fun makeRequest(
         @Body postData: PostData
-    ): Call<Token>
+    ): Token
 }
 
 data class PostData (
     var email: String,
     var password: String
 )
+
+data class MyEntity(val isComercialTime: Boolean)

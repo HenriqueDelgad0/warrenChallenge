@@ -13,12 +13,12 @@
     <activity/>
     <activity
         android:id="@+id/login_dest"
-        android:name="com.example.warrenchallenge.LoginActivity"
+        android:name="com.example.warrenchallenge.login.LoginView"
         android:label="login_activity"
         tools:layout="@layout/login_activity"/>
     <activity
         android:id="@+id/token_dest"
-        android:name="com.example.warrenchallenge.token.TokenActivityView"
+        android:name="com.example.warrenchallenge.card.CardView"
         android:label="token_activity"
-        tools:layout="@layout/token_activity"/>
+        tools:layout="@layout/card_activity"/>
 </navigation>

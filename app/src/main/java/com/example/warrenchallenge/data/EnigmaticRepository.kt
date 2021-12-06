@@ -1,43 +1,22 @@
 package com.example.warrenchallenge.data
 
-import com.example.warrenchallenge.model.ErrorToken
+import com.example.warrenchallenge.model.FeatureException
 import com.example.warrenchallenge.model.Token
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import retrofit2.*
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.warrenchallenge.model.toApiException
+import retrofit2.HttpException
 
-class EnigmaticRepository {
-    fun callRequest(email : String, password : String, callBack: CallBack<Token>) {
-        val baseUrl = "https://enigmatic-bayou-48219.herokuapp.com/api/v2/"
+import javax.inject.Inject
 
-        Retrofit
-            .Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create()).build()
-            .create(EnigmaticApi::class.java)
-            .makeRequest(PostData(email, password))
-            .enqueue(object : Callback<Token> {
-                override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                    if(response.code() == 200){
-                        callBack.onSuccessful(checkNotNull(response.body()))
-                        println(response.body())
-                    }else{
-                        val gson = Gson()
-                        val type = object : TypeToken<ErrorToken>() {}.type
-                        val errorResponse: ErrorToken? = gson.fromJson(checkNotNull(response.errorBody()).charStream(), type)
-
-                        callBack.onFailure(t = APIException(checkNotNull(errorResponse)))
-                    }
-                }
-
-                override fun onFailure(call: Call<Token>, t: Throwable) {
-                    callBack.onFailure(t)
-                }
-            })
+class EnigmaticRepository @Inject constructor(private val enigmaticApi: EnigmaticApi){
+    suspend fun callRequest(email : String, password : String): Token {
+        return try {
+            if (password.isBlank()) {
+                throw FeatureException("password should not be blank")
+            }
+            enigmaticApi.makeRequest(PostData(email, password))
+        } catch (e: HttpException) {
+            throw e.toApiException()
+        }
     }
 }
 
-class APIException(val errorToken: ErrorToken) : Exception("Invalid exception"){
-
-}
