@@ -18,4 +18,5 @@ class ProgressBarTest {
     fun `check the minimum result`() {
         assert(calculateProgressBar(522.295f, 200000.00) == 1.0)
     }
+
 }

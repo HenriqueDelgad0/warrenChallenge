@@ -37,8 +37,8 @@ class EnigmaticRepositoryTest {
             mockEnigmaticApi.makeRequest(PostData("email", "password"))
         }
     }
-    // FAILURE TESTS REGION
 
+    // FAILURE TESTS REGION
     @Test
     fun `test when there is no password then an error should be thrown`() = runTest {
         assertFailsWith<FeatureException> {

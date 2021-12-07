@@ -19,4 +19,3 @@ class EnigmaticRepository @Inject constructor(private val enigmaticApi: Enigmati
         }
     }
 }
-
