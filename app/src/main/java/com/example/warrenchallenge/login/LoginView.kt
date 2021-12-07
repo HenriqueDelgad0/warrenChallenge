@@ -1,25 +1,20 @@
 package com.example.warrenchallenge.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.viewModelScope
 import com.example.warrenchallenge.R
-import com.example.warrenchallenge.account.AccountData
-import com.example.warrenchallenge.data.CallBack
-import com.example.warrenchallenge.data.EnigmaticRepository
+import com.example.warrenchallenge.card.CardView
+import com.example.warrenchallenge.core.Resource
 import com.example.warrenchallenge.databinding.LoginActivityBinding
 import com.example.warrenchallenge.extensions.hideKeyboard
-import com.example.warrenchallenge.model.Token
-import com.example.warrenchallenge.card.CardView
-import com.example.warrenchallenge.card.TokenRepository
+import com.example.warrenchallenge.model.ApiException
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginView: AppCompatActivity() {
@@ -40,17 +35,34 @@ class LoginView: AppCompatActivity() {
             android.R.layout.simple_list_item_1, emails)
         textView.setAdapter(adapter)
 
-        viewModel.getTokenResponse().observe(this, {
-            goToCardActivity()
-            stopLoading()
+        viewModel.getTokenResponse().observe(this, { resource ->
+            when (resource) {
+                is Resource.Error -> handleError(resource.throwable)
+                is Resource.Loading -> progressBarLoading()
+                is Resource.Success -> handleSuccess()
+            }
         })
 
         callLoginButton()
 
         binding.loginButton.setOnClickListener{
-            progressBarLoading()
             loginButton()
         }
+    }
+
+    private fun handleError(throwable: Throwable?) {
+        Log.e("test", "an error happens", throwable)
+        stopLoading()
+        if (throwable is ApiException) {
+            Toast.makeText(this, throwable.errorToken.error, Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Tente novamente", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun handleSuccess() {
+        stopLoading()
+        goToCardActivity()
     }
 
     private fun loginButton() {

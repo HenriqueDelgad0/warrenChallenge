@@ -14,6 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 @ExperimentalCoroutinesApi
@@ -21,27 +22,31 @@ class CardRepositoryTest {
     lateinit var mockCardApi: CardAPI
     lateinit var cardRepository: CardRepository
 
+    private lateinit var mockedApiResponse: TokenData
+
     @Before
     fun before() {
         val background = Background("google.com", "google.com", "google.com",
             "google.com", "google.com")
         val data = Data("1", "Disney", background,
             100.0f, 1000.0, "10/10/21")
-        val lista = mutableListOf<Data>(data, data, data)
+        val list = mutableListOf<Data>(data, data, data)
+        mockedApiResponse = TokenData(list)
 
         mockCardApi = mockk()
         coEvery {
             mockCardApi.makeRequest(any())
-        } returns TokenData(portfolios = lista)
+        } returns mockedApiResponse
         cardRepository = CardRepository(mockCardApi)
     }
 
     @Test
     fun `test when the request is call`() = runTest {
-        cardRepository.callRequest("teste")
+        val response = cardRepository.callRequest("teste")
         coVerify {
             mockCardApi.makeRequest("teste")
         }
+        assertEquals(mockedApiResponse, response)
     }
 
     // FAILURE TESTS REGION
