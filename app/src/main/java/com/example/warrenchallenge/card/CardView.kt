@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.warrenchallenge.cardAPI.Data
 import com.example.warrenchallenge.core.Resource
-import com.example.warrenchallenge.login.LoginView
+import com.example.warrenchallenge.login.LoginActivity
 import com.example.warrenchallenge.databinding.CardActivityBinding
 import com.example.warrenchallenge.model.ApiException
 import com.example.warrenchallenge.recyclerView.RecyclerAdapter
@@ -49,7 +49,7 @@ class CardView: AppCompatActivity() {
         })
 
         if(!viewModel.hasDate()){
-            val intent = Intent(this@CardView, LoginView::class.java)
+            val intent = Intent(this@CardView, LoginActivity::class.java)
             finish()
             this@CardView.startActivity(intent)
         }

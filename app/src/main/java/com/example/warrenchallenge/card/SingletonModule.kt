@@ -9,6 +9,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -41,6 +43,11 @@ class SingletonModule {
     @Provides
     fun provideEnigmaticApi(retrofit: Retrofit) : EnigmaticApi{
         return retrofit.create(EnigmaticApi::class.java)
+    }
+
+    @Provides
+    fun provideDispatcher(): CoroutineDispatcher {
+        return Dispatchers.IO
     }
 
 }

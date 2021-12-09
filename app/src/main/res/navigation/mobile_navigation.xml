@@ -13,7 +13,7 @@
     <activity/>
     <activity
         android:id="@+id/login_dest"
-        android:name="com.example.warrenchallenge.login.LoginView"
+        android:name="com.example.warrenchallenge.login.LoginActivity"
         android:label="login_activity"
         tools:layout="@layout/login_activity"/>
     <activity

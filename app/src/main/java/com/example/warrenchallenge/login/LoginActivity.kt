@@ -17,7 +17,7 @@ import com.example.warrenchallenge.model.ApiException
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginView: AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     private lateinit var binding: LoginActivityBinding
 
     private val viewModel: LoginViewModel by viewModels()
@@ -73,9 +73,9 @@ class LoginView: AppCompatActivity() {
     }
 
     private fun goToCardActivity() {
-        val intent = Intent(this@LoginView, CardView::class.java)
+        val intent = Intent(this@LoginActivity, CardView::class.java)
         finish()
-        this@LoginView.startActivity(intent)
+        this@LoginActivity.startActivity(intent)
     }
 
     private fun callLoginButton(){

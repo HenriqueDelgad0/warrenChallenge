@@ -9,13 +9,17 @@ import com.example.warrenchallenge.card.TokenRepository
 import com.example.warrenchallenge.core.Resource
 import com.example.warrenchallenge.data.EnigmaticRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val enigmaticRepository: EnigmaticRepository,
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    private val dispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     private var tokenResponse: MutableLiveData<Resource<String>> = MutableLiveData()
@@ -24,8 +28,8 @@ class LoginViewModel @Inject constructor(
         return tokenResponse
     }
 
-    fun loginRequest(login: String, password: String){
-        viewModelScope.launch {
+    fun loginRequest(login: String, password: String) {
+        viewModelScope.launch(dispatcher) {
             // trigger loading evento to the UI
             tokenResponse.postValue(Resource.Loading())
 
@@ -42,15 +46,6 @@ class LoginViewModel @Inject constructor(
             } else {
                 tokenResponse.postValue(Resource.Error(result.exceptionOrNull()))
             }
-
-            // with try-catch
-//            try {
-//                val token = enigmaticRepository.callRequest(login, password)
-//                tokenRepository.saveTokenData(token.accessToken)
-//                tokenResponse.postValue(Resource.Success(token.accessToken))
-//            } catch (e: Throwable) {
-//                tokenResponse.postValue(Resource.Error(e))
-//            }
         }
     }
 
