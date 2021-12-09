@@ -41,7 +41,7 @@ class CardRepositoryTest {
     }
 
     @Test
-    fun `test when the request is call`() = runTest {
+    fun `check the return type of data`() = runTest {
         val response = cardRepository.callRequest("teste")
         coVerify {
             mockCardApi.makeRequest("teste")
@@ -59,16 +59,4 @@ class CardRepositoryTest {
         } throws(mockException())
     }
 
-//    @Test
-//    fun `test when the request are failing then the API error should be catched`() = runTest {
-//        mockEnigmaticApi = mockk()
-//        coEvery {
-//            mockEnigmaticApi.makeRequest(any())
-//        } throws(mockException())
-//
-//        enigmaticRepository = EnigmaticRepository(mockEnigmaticApi)
-//        assertFailsWith<ApiException> {
-//            enigmaticRepository.callRequest("email", "password")
-//        }
-//    }
 }

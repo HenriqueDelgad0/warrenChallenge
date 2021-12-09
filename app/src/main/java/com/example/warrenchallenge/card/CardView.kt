@@ -3,12 +3,17 @@ package com.example.warrenchallenge.card
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.warrenchallenge.cardAPI.Data
+import com.example.warrenchallenge.core.Resource
 import com.example.warrenchallenge.login.LoginView
 import com.example.warrenchallenge.databinding.CardActivityBinding
+import com.example.warrenchallenge.model.ApiException
 import com.example.warrenchallenge.recyclerView.RecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,15 +35,17 @@ class CardView: AppCompatActivity() {
         val recyclerView = binding.recyclerView
 
         layoutManager = LinearLayoutManager(this)
-
         recyclerView.layoutManager = layoutManager
 
         adapter = RecyclerAdapter()
         recyclerView.adapter = adapter
 
-        viewModel.getGoals().observe(this, { tokenData ->
-            adapter.cardData.addAll(tokenData.portfolios)
-            adapter.notifyDataSetChanged()
+        viewModel.getCardResponse().observe(this, { tokenData ->
+            when(tokenData){
+                is Resource.Error -> handleError(tokenData.throwable)
+                is Resource.Loading -> progressBarLoading()
+                is Resource.Success -> handleSuccess(tokenData.data.portfolios)
+            }
         })
 
         if(!viewModel.hasDate()){
@@ -46,5 +53,25 @@ class CardView: AppCompatActivity() {
             finish()
             this@CardView.startActivity(intent)
         }
+    }
+
+    private fun handleError(throwable: Throwable?){
+        Log.e("test", "an error happens", throwable)
+        if (throwable is ApiException) {
+            Toast.makeText(this, throwable.errorToken.error, Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Tente novamente", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun progressBarLoading(){
+        Log.i("Teste", "Chamou progressBarLoading")
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun handleSuccess(portfolios: List<Data>) {
+        Log.i("Teste", "Chamou handleSuccess")
+        adapter.cardData.addAll(portfolios)
+        adapter.notifyDataSetChanged()
     }
 }

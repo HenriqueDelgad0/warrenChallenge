@@ -1,5 +1,6 @@
 package com.example.warrenchallenge.cardAPI
 
+import com.example.warrenchallenge.core.Resource
 import retrofit2.http.*
 
 interface CardAPI {

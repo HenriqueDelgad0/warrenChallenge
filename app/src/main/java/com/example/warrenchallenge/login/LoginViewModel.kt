@@ -51,8 +51,6 @@ class LoginViewModel @Inject constructor(
 //            } catch (e: Throwable) {
 //                tokenResponse.postValue(Resource.Error(e))
 //            }
-
-
         }
     }
 
