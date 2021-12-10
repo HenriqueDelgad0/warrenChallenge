@@ -29,10 +29,9 @@ class CardViewModel @Inject constructor(
         return cardResponse
     }
 
-    fun loadGoals() {
+    private fun loadGoals() {
         viewModelScope.launch(dispatcher) {
             cardResponse.postValue(Resource.Loading())
-
             val result: Result<TokenData> = runCatching {
                 val tokenData = repository.callRequest(tokenRepository.getApiToken()!!)
                 tokenData
