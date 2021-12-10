@@ -18,7 +18,7 @@ import com.example.warrenchallenge.recyclerView.RecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CardView: AppCompatActivity() {
+class CardActivity: AppCompatActivity() {
     private lateinit var binding: CardActivityBinding
     private val viewModel: CardViewModel by viewModels()
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -49,9 +49,9 @@ class CardView: AppCompatActivity() {
         })
 
         if(!viewModel.hasDate()){
-            val intent = Intent(this@CardView, LoginActivity::class.java)
+            val intent = Intent(this@CardActivity, LoginActivity::class.java)
             finish()
-            this@CardView.startActivity(intent)
+            this@CardActivity.startActivity(intent)
         }
     }
 
@@ -65,12 +65,10 @@ class CardView: AppCompatActivity() {
     }
 
     private fun progressBarLoading(){
-        Log.i("Teste", "Chamou progressBarLoading")
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun handleSuccess(portfolios: List<Data>) {
-        Log.i("Teste", "Chamou handleSuccess")
         adapter.cardData.addAll(portfolios)
         adapter.notifyDataSetChanged()
     }

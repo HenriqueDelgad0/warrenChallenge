@@ -1,4 +1,4 @@
-package com.example.warrenchallenge.card
+package com.example.warrenchallenge.core
 
 import android.app.Application
 import android.content.SharedPreferences

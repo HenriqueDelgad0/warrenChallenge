@@ -2,7 +2,6 @@ package com.example.warrenchallenge.card
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.warrenchallenge.account.UserData
 import javax.inject.Inject
 
 interface TokenRepository {

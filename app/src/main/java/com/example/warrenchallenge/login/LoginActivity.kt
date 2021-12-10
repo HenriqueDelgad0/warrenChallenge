@@ -9,7 +9,7 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.warrenchallenge.R
-import com.example.warrenchallenge.card.CardView
+import com.example.warrenchallenge.card.CardActivity
 import com.example.warrenchallenge.core.Resource
 import com.example.warrenchallenge.databinding.LoginActivityBinding
 import com.example.warrenchallenge.extensions.hideKeyboard
@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToCardActivity() {
-        val intent = Intent(this@LoginActivity, CardView::class.java)
+        val intent = Intent(this@LoginActivity, CardActivity::class.java)
         finish()
         this@LoginActivity.startActivity(intent)
     }

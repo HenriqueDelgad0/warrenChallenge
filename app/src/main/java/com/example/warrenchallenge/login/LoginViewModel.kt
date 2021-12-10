@@ -30,12 +30,8 @@ class LoginViewModel @Inject constructor(
 
     fun loginRequest(login: String, password: String) {
         viewModelScope.launch(dispatcher) {
-            // trigger loading evento to the UI
             tokenResponse.postValue(Resource.Loading())
 
-            // todo: choose one or another
-
-            // transform API response to result
             val result: Result<String> = runCatching {
                 val token = enigmaticRepository.callRequest(login, password)
                 tokenRepository.saveTokenData(token.accessToken)
@@ -48,5 +44,4 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-
 }

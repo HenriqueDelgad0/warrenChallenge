@@ -18,7 +18,7 @@
         tools:layout="@layout/login_activity"/>
     <activity
         android:id="@+id/token_dest"
-        android:name="com.example.warrenchallenge.card.CardView"
+        android:name="com.example.warrenchallenge.card.CardActivity"
         android:label="token_activity"
         tools:layout="@layout/card_activity"/>
 </navigation>

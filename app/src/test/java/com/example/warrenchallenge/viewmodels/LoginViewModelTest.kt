@@ -36,6 +36,7 @@ class LoginViewModelTest {
         coEvery {
             enigmaticRepository.callRequest(any(), any())
         } returns Token("any token", "any refresh token")
+
         coEvery {
             tokenRepository.saveTokenData(any())
         } returns Unit
@@ -50,7 +51,6 @@ class LoginViewModelTest {
 
     @Test
     fun `test error emission`() = mainCoroutineRule.testDispatcher.runBlockingTest {
-        // fake mock
         enigmaticRepository = mockk()
         tokenRepository = mockk()
         coEvery {
